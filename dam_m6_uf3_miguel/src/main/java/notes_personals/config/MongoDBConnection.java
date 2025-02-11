@@ -1,6 +1,5 @@
-package notes_personals;
+package notes_personals.config;
 
-import com.mongodb.ConnectionString;
 import org.bson.Document;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
@@ -8,7 +7,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.FindIterable;
 
-public class MongoClientConnectionExample {
+public class MongoDBConnection {
     public static void main(String[] args) {
 
         String uri = "mongodb+srv://miguel:123@activitat3.f2avt.mongodb.net/?retryWrites=true&w=majority&appName=Activitat3";
