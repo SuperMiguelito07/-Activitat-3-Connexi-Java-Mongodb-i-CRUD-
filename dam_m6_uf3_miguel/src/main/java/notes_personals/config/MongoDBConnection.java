@@ -34,7 +34,7 @@ public class MongoDBConnection {
         return collection;
     }
 
-    public void insertNote(Note note) {
+    public void inserirNotes(Note note) {
         try {
             Document doc = note.toDocument();
             collection.insertOne(doc);
@@ -44,7 +44,7 @@ public class MongoDBConnection {
         }
     }
 
-    public void printAllNotes() {
+    public void imprimirNotes() {
         FindIterable<Document> notes = collection.find();
         for (Document note : notes) {
             System.out.println("Títol: " + note.getString("title"));
@@ -53,11 +53,12 @@ public class MongoDBConnection {
         }
     }
 
-    public void printNotesByDateRange(String startDate, String endDate) {
+    public void ordenarprDates(String startDate, String endDate) {
         FindIterable<Document> notes = collection.find(Filters.and(
                 Filters.gte("created_at", startDate),
                 Filters.lte("created_at", endDate)
         ));
+
         for (Document note : notes) {
             System.out.println("Títol: " + note.getString("title"));
             System.out.println("Data de creació: " + note.getString("created_at"));
@@ -65,7 +66,7 @@ public class MongoDBConnection {
         }
     }
 
-    public void closeConnection() {
+    public void tancarConexion() {
         if (mongoClient != null) {
             mongoClient.close();
             System.out.println("Conexión cerrada");
@@ -78,7 +79,7 @@ public class MongoDBConnection {
         boolean exit = false;
 
         while (!exit) {
-            System.out.println("\n--- Menú ---");
+            System.out.println("Menú");
             System.out.println("1. Insertar una nota");
             System.out.println("2. Mostrar todas las notas");
             System.out.println("3. Mostrar notas por rango de fechas");
@@ -97,12 +98,12 @@ public class MongoDBConnection {
                     String createdAt = scanner.nextLine();
 
                     Note newNote = new Note(id, title, createdAt);
-                    connection.insertNote(newNote);
+                    connection.inserirNotes(newNote);
                     break;
 
                 case 2:
-                    System.out.println("\n--- Todas las notas ---");
-                    connection.printAllNotes();
+                    System.out.println("Todas las notas");
+                    connection.imprimirNotes();
                     break;
 
                 case 3:
@@ -111,8 +112,8 @@ public class MongoDBConnection {
                     System.out.print("Introduce la fecha final (YYYY-MM-DD): ");
                     String endDate = scanner.nextLine();
 
-                    System.out.println("\n--- Notas en el rango de fechas ---");
-                    connection.printNotesByDateRange(startDate, endDate);
+                    System.out.println("Notas en el rango de fechas");
+                    connection.ordenarprDates(startDate, endDate);
                     break;
 
                 case 4:
@@ -124,8 +125,7 @@ public class MongoDBConnection {
                     System.out.println("Opción no válida. Inténtalo de nuevo.");
             }
         }
-
-        connection.closeConnection();
+        connection.tancarConexion();
         scanner.close();
     }
 }

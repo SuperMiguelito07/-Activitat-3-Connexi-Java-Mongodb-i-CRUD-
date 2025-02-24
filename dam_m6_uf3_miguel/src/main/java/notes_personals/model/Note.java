@@ -39,7 +39,7 @@ public class Note {
 
     @Override
     public String toString() {
-        return "Note [\n  _id=" + _id + ",\n  title=" + title + ",\n  created_at=" + created_at + "\n]";
+        return "Note [_id=" + _id + ",title=" + title + ",created_at=" + created_at + "]";
     }
 
     public Document toDocument() {
